@@ -118,10 +118,11 @@ function Resume() {
         <ExpEntry
           org="Ramirez & Associates P.C."
           location="Dallas, TX"
-          role="Case Administrator"
+          role="Case Manager / Research Analyst"
           dates="May 2025 – Present"
           bullets={[
-            'Prepare and assemble nonimmigrant visa petitions and applications for employees of public and private sector employers filing with the USCIS, under direction of the firm\'s lead immigration paralegal.',
+            'Prepare nonimmigrant visa petitions and applications for employees of public and private sector employers for filing with the USCIS, under direction of firm\'s lead immigration paralegal.',
+            'Research publicly accessible data related to online privacy policies and industry standards for intracompany risk tolerances, for general application by firm\'s attorneys.',
           ]}
         />
         <ExpEntry
@@ -145,7 +146,7 @@ function Resume() {
         <ExpEntry
           org="Ramlaw Corporate Services, L.L.C."
           location="Dallas, TX"
-          role="Case Administrator"
+          role="Registered Agent Coordinator"
           dates="May 2022 – August 2022"
           bullets={[
             'Conducted audit of company\'s corporate clients for compliance and registration status with states\' Secretary of State; prepared reports of clients\' active status and registered agent information.',
@@ -160,7 +161,7 @@ function Resume() {
           role="Active Member"
           dates="August 2025 – Present"
           bullets={[
-            'Meets with business executives to discuss corporate finance, investment strategies, and real estate.',
+            'Meets with business executives to discuss topics pertaining to the different facets of finance, including corporate finance, investment strategies, and management and real estate strategies.',
           ]}
         />
         <ExpEntry
@@ -169,7 +170,7 @@ function Resume() {
           role="Licensure Candidate"
           dates="Spring 2026"
           bullets={[
-            'Completed 180 classroom hours; passed National Exam 2025–2026 in pursuit of future brokerage opportunities.',
+            'Full online education of Texas real estate sales; passed National Exam 2025–2026 in pursuit of future brokerage opportunities.',
           ]}
         />
         <ExpEntry
@@ -194,7 +195,7 @@ function Resume() {
       {/* Skills */}
       <ResumeSection title="Skills & Interests">
         <div style={{ fontSize: 11, lineHeight: 1.7, color: '#333' }}>
-          <div><strong>Skills:</strong> Microsoft Excel, Python, Streamlit, Legal Compliance Platforms, Analytical Writing</div>
+          <div><strong>Skills:</strong> Microsoft Excel, Python, Legal Compliance Platforms, Analytical Writing</div>
           <div style={{ marginTop: 4 }}><strong>Interests:</strong> Mountain Biking, Hunting, Weightlifting, Coaching Baseball</div>
         </div>
       </ResumeSection>
@@ -226,31 +227,34 @@ function Resume() {
 
 export default function About() {
   return (
-    <div style={{ display: 'flex', gap: '3rem', alignItems: 'flex-start', fontFamily: '"Times New Roman", Times, serif' }}>
+    <div style={{ fontFamily: '"Times New Roman", Times, serif' }}>
 
-      {/* Left — About text */}
-      <div style={{ flex: '0 0 300px', maxWidth: 300 }}>
+      {/* About text — above resume */}
+      <div style={{ marginBottom: '2rem' }}>
         <h2 style={{ marginTop: 0, color: navy, fontSize: 20, borderBottom: `2px solid ${gold}`, paddingBottom: 8, marginBottom: 16 }}>
-          About Me
+          About
         </h2>
-        <p style={{ fontSize: 14.5, lineHeight: 1.85, color: '#1A1A1A', margin: 0 }}>
-          My name is Florentino Ramirez. I am a candidate for a Master's Degree in Finance
-          from the Walton College of Business at the University of Arkansas in Spring of 2026.
-          I graduated from Austin College with a degree in finance, where I was elected team
-          captain of the baseball team in 2024 and 2025.
+        <p style={{ fontSize: 15, lineHeight: 1.9, color: '#1A1A1A', margin: 0, maxWidth: 780 }}>
+          I am a Master of Science in Finance candidate at the Sam M. Walton College of Business,
+          University of Arkansas, completing an accelerated one-year program graduating in Spring
+          2026. I hold a Bachelor of Arts in Finance from Austin College and have passed the
+          national real estate licensing exam toward my Texas sales agent license.
         </p>
-        <p style={{ fontSize: 14.5, lineHeight: 1.85, color: '#1A1A1A', marginTop: 16 }}>
-          I am aspiring for a career in Real Estate. I am a dedicated beginner in the Spanish
-          language, I love the outdoors, fitness, and anything competitive. The competitive
-          nature of real estate is what attracts me to the industry. I look forward to working
-          on great projects and being a team player for a firm in the future.
+        <p style={{ fontSize: 15, lineHeight: 1.9, color: '#1A1A1A', margin: '16px 0 0', maxWidth: 780 }}>
+          My interests sit at the intersection of real estate and financial analysis. I built an
+          automated residential valuation model and a Python-based stock screening tool, gaining
+          hands-on experience in financial modeling, data analysis, and applied research.
+        </p>
+        <p style={{ fontSize: 15, lineHeight: 1.9, color: '#1A1A1A', margin: '16px 0 0', maxWidth: 780 }}>
+          I also spent five years as an NCAA student-athlete and was twice elected team captain —
+          an experience that shaped the discipline I bring to everything I do. I am looking to
+          start my career as an investment, development, or market analyst at a real estate firm,
+          where I can contribute meaningful analysis and grow within a strong team.
         </p>
       </div>
 
-      {/* Right — Resume */}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <Resume />
-      </div>
+      {/* Resume — below about text */}
+      <Resume />
 
     </div>
   )

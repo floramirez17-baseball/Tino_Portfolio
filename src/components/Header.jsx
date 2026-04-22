@@ -66,9 +66,9 @@ export default function Header() {
           <div style={{
             fontSize: 12, color: '#C49A22', marginTop: 4,
             fontFamily: '"Times New Roman", Times, serif',
-            letterSpacing: 1.5, textTransform: 'uppercase',
+            letterSpacing: 1.5,
           }}>
-            Career Website &nbsp;·&nbsp; Dallas, TX
+            Walton College of Business &nbsp; & &nbsp; Dallas, TX
           </div>
           <div style={{ marginTop: 8, display: 'flex', gap: 8 }}>
             {['Finance', 'Real Estate', 'Data Analytics'].map(t => (

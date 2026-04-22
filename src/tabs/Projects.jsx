@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 
 const PROJECT_TABS = [
-  'Real Estate Finance Final Project',
+  'Real Estate Finance',
   "Should AVM's Replace Human Appraisers?",
-  '2025 AI Bubble Research',
+  'AI Bubble Research',
   'Stock Analysis App',
   'Downloads',
 ]
@@ -454,7 +454,7 @@ function StockAnalysisApp() {
 
 /* ── Main component ──────────────────────────────── */
 export default function Projects() {
-  const [proj, setProj] = useState('Real Estate Finance Final Project')
+  const [proj, setProj] = useState('Real Estate Finance')
 
   return (
     <div>
@@ -472,7 +472,7 @@ export default function Projects() {
       </div>
 
       {/* Real Estate Finance */}
-      {proj === 'Real Estate Finance Final Project' && (
+      {proj === 'Real Estate Finance' && (
         <div style={{ fontFamily: '"Times New Roman", Times, serif', maxWidth: 820, margin: '0 auto' }}>
           <div style={mastheadTop}>
             <span style={mastheadLabel}>Walton College of Business</span>
@@ -517,7 +517,7 @@ export default function Projects() {
 
       {proj === "Should AVM's Replace Human Appraisers?" && <AVMPaper />}
 
-      {proj === '2025 AI Bubble Research' && <AIBubbleProject />}
+      {proj === 'AI Bubble Research' && <AIBubbleProject />}
 
       {proj === 'Stock Analysis App' && <StockAnalysisApp />}
 
