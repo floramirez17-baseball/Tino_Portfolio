@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 
 const TICKERS = [
-  'NVDA','AMD','TSMC','PLTR','SPY','QQQ',
+  'NVDA','AMD','TSM','PLTR','SPY','QQQ',
   'O','WPC','PLD','EQIX','VNQ','WY','WELL','VTR','EXR','ESS','CBRE','JLL',
 ];
+
+const API_KEY = import.meta.env.VITE_FINNHUB_KEY;
 
 function useQuotes() {
   const [quotes, setQuotes] = useState(() =>
@@ -11,16 +13,25 @@ function useQuotes() {
   );
 
   useEffect(() => {
-    const fill = () =>
-      setQuotes(TICKERS.map(s => ({
-        symbol: s,
-        price: +(Math.random() * 280 + 30).toFixed(2),
-        change: +(Math.random() * 12 - 6).toFixed(2),
-        changePercent: +(Math.random() * 5 - 2.5).toFixed(2),
-      })));
+    const fetchAll = async () => {
+      const results = await Promise.allSettled(
+        TICKERS.map(s =>
+          fetch(`https://finnhub.io/api/v1/quote?symbol=${s}&token=${API_KEY}`)
+            .then(r => r.json())
+            .then(d => ({ symbol: s, price: d.c, change: d.d, changePercent: d.dp }))
+        )
+      );
+      setQuotes(
+        results.map((r, i) =>
+          r.status === 'fulfilled' && r.value.price
+            ? r.value
+            : { symbol: TICKERS[i], price: null, change: null, changePercent: null }
+        )
+      );
+    };
 
-    fill();
-    const id = setInterval(fill, 300_000);
+    fetchAll();
+    const id = setInterval(fetchAll, 300_000);
     return () => clearInterval(id);
   }, []);
 
