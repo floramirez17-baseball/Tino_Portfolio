@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const PROJECT_TABS = [
   'Real Estate Finance Final Project',
   "Should AVM's Replace Human Appraisers?",
   '2025 AI Bubble Research',
+  'Stock Analysis App',
   'Downloads',
 ]
 
@@ -299,6 +300,134 @@ function AIBubbleProject() {
   )
 }
 
+/* ── Stock Analysis App ──────────────────────────── */
+function StockAnalysisApp() {
+  const [code, setCode] = useState('Loading source code…')
+
+  useEffect(() => {
+    fetch('/files/App.py')
+      .then(r => r.text())
+      .then(setCode)
+      .catch(() => setCode('Could not load source code.'))
+  }, [])
+
+  return (
+    <div style={{ fontFamily: '"Times New Roman", Times, serif', maxWidth: 820, margin: '0 auto' }}>
+      {/* Masthead */}
+      <div style={mastheadTop}>
+        <span style={mastheadLabel}>Walton College of Business</span>
+        <span style={mastheadMeta}>Reviewed by Dr. Alejandro Pacheco &nbsp;·&nbsp; Spring 2026 &nbsp;·&nbsp; Master's of Science in Finance</span>
+      </div>
+      <hr style={mastheadRule} />
+
+      {/* Header */}
+      <div style={{ marginBottom: 28 }}>
+        <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: '#5C5C5C', marginBottom: 10 }}>
+          Individual Project &nbsp;·&nbsp; Financial Data Analytics II
+        </div>
+        <h1 style={{ fontSize: 26, fontWeight: 700, lineHeight: 1.3, margin: '0 0 16px', color: '#0C2340' }}>
+          Stock Analysis App: An Interactive Equity Portfolio Dashboard
+        </h1>
+        <div style={{ fontSize: 15, color: '#333', marginBottom: 4 }}>
+          <strong>Florentino M. Ramirez IV</strong>
+        </div>
+        <div style={{ fontSize: 13, color: '#5C5C5C', marginBottom: 16 }}>
+          Financial Data Analytics II &nbsp;·&nbsp; Spring 2026
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 20 }}>
+          {['Streamlit', 'Portfolio Optimization', 'Equity Analysis', 'Python', 'Mean-Variance', 'Sharpe Ratio'].map(k => (
+            <KeywordTag key={k}>{k}</KeywordTag>
+          ))}
+        </div>
+
+        {/* Launch button */}
+        <a
+          href="https://stapp-fmr.streamlit.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-block',
+            fontFamily: '"Times New Roman", Times, serif',
+            background: '#0C2340',
+            color: '#FFFEF8',
+            border: '1px solid #0C2340',
+            padding: '10px 24px',
+            borderRadius: 2,
+            textDecoration: 'none',
+            fontSize: 13,
+            letterSpacing: 0.5,
+            marginRight: 12,
+          }}
+        >
+          ↗ Launch Live App
+        </a>
+        <DlBtn href="/files/App.py">↓ Download App.py</DlBtn>
+      </div>
+
+      <div style={{ borderTop: '1px solid #D4C9B0', margin: '28px 0' }} />
+
+      {/* Abstract */}
+      <div style={abstractBox}>
+        <div style={abstractLabel}>Abstract</div>
+        <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.8, color: '#222' }}>
+          This project builds an interactive web application using Streamlit that allows a user to construct and analyze equity portfolios in real time. The app accepts user inputs — ticker symbols, date ranges, and a configurable risk-free rate — downloads adjusted closing price data from Yahoo Finance via yfinance, and produces a full suite of return calculations, risk analytics, correlation analysis, and portfolio optimizations. Users can select between 3 and 10 tickers and explore five analytical tabs: an overview of key metrics per stock, price and performance charts including a cumulative wealth index and rolling volatility, drawdown and return distribution analysis, a pairwise correlation and covariance matrix, and a full portfolio optimization module. The optimization tab builds an equal-weight, Global Minimum Variance, and Tangency (Maximum Sharpe) portfolio, supports a custom weight slider interface, plots the efficient frontier with the Capital Allocation Line, and tests how sensitive the optimal weights are to the choice of estimation window. The app is deployed live on Streamlit Community Cloud.
+        </p>
+      </div>
+
+      {/* Embedded app */}
+      <div style={{ marginBottom: 40 }}>
+        <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: '#0C2340', fontWeight: 700, marginBottom: 6 }}>
+          Live Application
+        </div>
+        <div style={{ fontSize: 12, color: '#5C5C5C', marginBottom: 12 }}>
+          Interact with the app below, or{' '}
+          <a href="https://stapp-fmr.streamlit.app" target="_blank" rel="noopener noreferrer" style={{ color: '#0C2340' }}>
+            open it in a new tab
+          </a>{' '}for full screen.
+        </div>
+        <iframe
+          src="https://stapp-fmr.streamlit.app?embed=true"
+          title="Stock Analysis App"
+          style={{
+            width: '100%',
+            height: 750,
+            border: '1px solid #D4C9B0',
+            borderRadius: 2,
+            background: '#fff',
+          }}
+          allow="clipboard-write"
+        />
+      </div>
+
+      {/* Source code */}
+      <div style={{ borderTop: '1px solid #D4C9B0', paddingTop: 28 }}>
+        <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: '#0C2340', fontWeight: 700, marginBottom: 6 }}>
+          Source Code — App.py
+        </div>
+        <div style={{ fontSize: 12, color: '#5C5C5C', marginBottom: 12 }}>
+          Scroll to explore the full script.
+        </div>
+        <pre style={{
+          height: 600,
+          overflowY: 'auto',
+          background: '#1E1E2E',
+          color: '#CDD6F4',
+          fontFamily: '"Courier New", Courier, monospace',
+          fontSize: 12,
+          lineHeight: 1.6,
+          padding: '20px 24px',
+          borderRadius: 3,
+          margin: 0,
+          whiteSpace: 'pre',
+          border: '1px solid #D4C9B0',
+        }}>
+          {code}
+        </pre>
+      </div>
+    </div>
+  )
+}
+
 /* ── Main component ──────────────────────────────── */
 export default function Projects() {
   const [proj, setProj] = useState('Real Estate Finance Final Project')
@@ -365,11 +494,14 @@ export default function Projects() {
 
       {proj === '2025 AI Bubble Research' && <AIBubbleProject />}
 
+      {proj === 'Stock Analysis App' && <StockAnalysisApp />}
+
       {proj === 'Downloads' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <DlBtn href="/files/Real Estate Finance Final Project.pptx">↓ FINN Real Estate — Group Project (.pptx)</DlBtn>
           <DlBtn href="/files/Should AVMs Replace Human Appraisers?.docx">↓ Should AVM's Replace Human Appraisers? (.docx)</DlBtn>
           <DlBtn href="/files/Is There an AI Bubble?.pptx">↓ Is There an AI Bubble? — Research Presentation (.pptx)</DlBtn>
+          <DlBtn href="/files/App.py">↓ Stock Analysis App — App.py</DlBtn>
         </div>
       )}
     </div>
