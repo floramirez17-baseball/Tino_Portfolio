@@ -202,6 +202,29 @@ function AVMPaper() {
             ))}
           </ol>
         </div>
+
+        {/* Full report download button */}
+        <a
+          href="/files/Should AVMs Replace Human Appraisers%3F.docx"
+          download
+          style={{
+            display: 'block',
+            marginTop: 40,
+            background: '#0C2340',
+            color: '#FFFEF8',
+            fontFamily: '"Times New Roman", Times, serif',
+            fontSize: 15,
+            fontWeight: 600,
+            letterSpacing: 0.5,
+            textAlign: 'center',
+            padding: '18px 24px',
+            borderRadius: 2,
+            textDecoration: 'none',
+            border: '2px solid #C49A22',
+          }}
+        >
+          ↓ Download the Full 21-Page Report (.docx)
+        </a>
       </div>
     </div>
   )
