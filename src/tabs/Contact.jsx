@@ -1,13 +1,14 @@
-import { FaEnvelope, FaPhone, FaLinkedin } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaLinkedin, FaGithub } from 'react-icons/fa';
 
 const gold = '#C49A22'
 const navy = '#0C2340'
 const border = '#D4C9B0'
 
 const items = [
-  { Icon: FaEnvelope, label: 'Email', value: 'fmramirez17@outlook.com', href: 'mailto:fmramirez17@outlook.com' },
-  { Icon: FaPhone,   label: 'Phone', value: '(214) 620-4632',           href: 'tel:+12146204632' },
-  { Icon: FaLinkedin,label: 'LinkedIn', value: 'linkedin.com/in/tinor17', href: 'https://www.linkedin.com/in/tinor17' },
+  { Icon: FaEnvelope, label: 'Email',    value: 'fmramirez17@outlook.com',    href: 'mailto:fmramirez17@outlook.com' },
+  { Icon: FaPhone,    label: 'Phone',    value: '(214) 620-4632',              href: 'tel:+12146204632' },
+  { Icon: FaLinkedin, label: 'LinkedIn', value: 'linkedin.com/in/tinor17',     href: 'https://www.linkedin.com/in/tinor17' },
+  { Icon: FaGithub,   label: 'GitHub',   value: 'github.com/floramirez17-baseball',         href: 'https://github.com/floramirez17-baseball' },
 ]
 
 export default function Contact() {

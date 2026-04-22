@@ -113,7 +113,6 @@ function Resume() {
           dates="Graduation: May 2020"
         />
       </ResumeSection>
-
       {/* Experience */}
       <ResumeSection title="Professional Experience">
         <ExpEntry
@@ -153,7 +152,6 @@ function Resume() {
           ]}
         />
       </ResumeSection>
-
       {/* Leadership */}
       <ResumeSection title="Professional Development & Leadership">
         <ExpEntry
@@ -193,7 +191,6 @@ function Resume() {
           ]}
         />
       </ResumeSection>
-
       {/* Skills */}
       <ResumeSection title="Skills & Interests">
         <div style={{ fontSize: 11, lineHeight: 1.7, color: '#333' }}>
