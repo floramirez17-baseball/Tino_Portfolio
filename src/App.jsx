@@ -8,7 +8,75 @@ import Projects from './tabs/Projects'
 import Experience from './tabs/Experience'
 import Contact from './tabs/Contact'
 
-function Footer() {
+function AboutAppModal({ onClose }) {
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, background: 'rgba(12,35,64,0.55)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        zIndex: 1000, padding: 20,
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: '#FFFEF8',
+          borderTop: '4px solid #0C2340',
+          borderLeft: '4px solid #C49A22',
+          maxWidth: 520, width: '100%',
+          padding: '26px 28px 22px',
+          fontFamily: '"Times New Roman", Times, serif',
+          color: '#1A1A1A',
+          borderRadius: 2,
+          boxShadow: '0 20px 60px rgba(0,0,0,0.25)',
+          position: 'relative',
+        }}
+      >
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          style={{
+            position: 'absolute', top: 10, right: 12,
+            background: 'none', border: 'none', fontSize: 20,
+            color: '#0C2340', cursor: 'pointer', lineHeight: 1,
+          }}
+        >×</button>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#C49A22', marginBottom: 6 }}>
+          About This Site
+        </div>
+        <div style={{ fontSize: 20, fontWeight: 700, color: '#0C2340', marginBottom: 12 }}>
+          How this site was built
+        </div>
+        <p style={{ fontSize: 14, lineHeight: 1.75, margin: '0 0 12px' }}>
+          Designed and coded as a personal career website. The project is a
+          single-page application built with <strong>React</strong> and
+          <strong> Vite</strong>, styled with inline CSS-in-JS and custom
+          typography, and hosted from the <strong>GitHub</strong> repository
+          linked in the footer, with <strong>GitHub Pro</strong> access provided
+          through the <strong>GitHub Student Developer Pack</strong>.
+        </p>
+        <p style={{ fontSize: 14, lineHeight: 1.75, margin: '0 0 12px' }}>
+          The live ticker pulls real-time quotes from the <strong>Finnhub</strong> API
+          through a serverless function deployed on <strong>Vercel</strong>. Icons
+          are provided by <strong>react-icons</strong>. The codebase is written in
+          JavaScript (JSX) and HTML/CSS.
+        </p>
+        <p style={{ fontSize: 14, lineHeight: 1.75, margin: '0 0 12px' }}>
+          Development was assisted by <strong>Claude Opus 4.7</strong> running in
+          Claude Code, used as a pair-programming tool for iteration, refactoring,
+          and UI refinement.
+        </p>
+        <p style={{ fontSize: 12, lineHeight: 1.7, color: '#5C5C5C', margin: '12px 0 0', fontStyle: 'italic' }}>
+          Disclaimer: Content reflects personal career history. Market data is provided
+          for display purposes only and is not intended as financial advice.
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function Footer({ onOpenAbout }) {
   return (
     <footer style={{
       borderTop: '3px solid #0C2340',
@@ -38,7 +106,16 @@ function Footer() {
           ))}
         </div>
         <div style={{ fontSize: 11, color: '#8899BB', textAlign: 'right' }}>
-          Dallas, TX &nbsp;·&nbsp; © {new Date().getFullYear()}
+          <button
+            onClick={onOpenAbout}
+            style={{
+              background: 'none', border: 'none', color: '#C49A22',
+              fontFamily: '"Times New Roman", Times, serif', fontSize: 12,
+              letterSpacing: 0.5, cursor: 'pointer', padding: 0,
+              textDecoration: 'underline',
+            }}
+          >About this app</button>
+          <div style={{ marginTop: 4 }}>Dallas, TX &nbsp;·&nbsp; © {new Date().getFullYear()}</div>
         </div>
       </div>
     </footer>
@@ -47,6 +124,7 @@ function Footer() {
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('About')
+  const [showAbout, setShowAbout] = useState(false)
   const tabs = ['About', 'Projects', 'Experience', 'Contact']
 
   const content = {
@@ -68,9 +146,10 @@ export default function App() {
     }}>
       <Header />
       <TickerTape />
-      <NavTabs tabs={tabs} active={activeTab} onChange={setActiveTab} />
+      <NavTabs tabs={tabs} active={activeTab} onChange={setActiveTab} onInfo={() => setShowAbout(true)} />
       <div style={{ padding: '2rem 2rem', flex: 1 }}>{content[activeTab]}</div>
-      <Footer />
+      <Footer onOpenAbout={() => setShowAbout(true)} />
+      {showAbout && <AboutAppModal onClose={() => setShowAbout(false)} />}
     </div>
   )
 }
