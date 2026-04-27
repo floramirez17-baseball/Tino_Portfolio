@@ -227,13 +227,33 @@ function Resume() {
 
 export default function About() {
   return (
-    <div style={{ fontFamily: '"Times New Roman", Times, serif' }}>
-
+    <div
+      style={{
+        maxWidth: 900,
+        margin: '0 auto',
+        padding: '36px 18px 60px 18px',
+        background: '#FFFEF8',
+        border: `1px solid ${border}`,
+        borderRadius: 8,
+        minHeight: 500,
+        boxShadow: '0 2px 16px rgba(0,0,0,0.04)',
+      }}
+    >
+      <div
+        style={{
+          textAlign: 'center',
+          fontSize: 48,
+          fontWeight: 900,
+          color: navy,
+          letterSpacing: 2,
+          marginBottom: 32,
+          marginTop: 8,
+        }}
+      >
+        About
+      </div>
       {/* About text — above resume */}
       <div style={{ marginBottom: '2rem' }}>
-        <h2 style={{ marginTop: 0, color: navy, fontSize: 20, borderBottom: `2px solid ${gold}`, paddingBottom: 8, marginBottom: 16 }}>
-          About
-        </h2>
         <p style={{ fontSize: 15, lineHeight: 1.9, color: '#1A1A1A', margin: 0, maxWidth: 780 }}>
           I am a Master of Science in Finance candidate at the Sam M. Walton College of Business,
           University of Arkansas, completing an accelerated one-year program graduating in Spring
