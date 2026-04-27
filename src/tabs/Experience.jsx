@@ -203,7 +203,6 @@ function Baseball() {
         org="Independent Baseball Lessons"
         location="North Dallas, TX"
         role="Hitting Instructor"
-        dates="Ongoing"
         body="On summer evenings my partners and I give youth hitting lessons at public parks around North Dallas. My hitting philosophy traces back to the Jaramillo brothers — Rudy, the longtime Rangers hitting coach, and Tony, currently the Double-A hitting coach in the Angels organization — who taught me how to simplify the swing. I wish I'd learned it sooner, and that's why I love passing it on."
       />
     </>

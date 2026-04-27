@@ -223,7 +223,7 @@ function AVMPaper() {
             border: '2px solid #C49A22',
           }}
         >
-          ↓ Download the Full 21-Page Report (.docx)
+          ↓ Download the Full Report (.docx)
         </a>
       </div>
     </div>
@@ -287,27 +287,6 @@ function AIBubbleProject() {
           Presentation
         </div>
         <Slideshow basePath="/ai-slides" totalSlides={AI_SLIDES} />
-      </div>
-
-      {/* Notebook */}
-      <div style={{ borderTop: '1px solid #D4C9B0', paddingTop: 28, marginBottom: 40 }}>
-        <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: '#0C2340', fontWeight: 700, marginBottom: 6 }}>
-          Research Notebook
-        </div>
-        <div style={{ fontSize: 13, color: '#5C5C5C', marginBottom: 14 }}>
-          Beatty, Kaufman &amp; Ramirez — Financial Data Analytics, Fall 2025
-        </div>
-        <iframe
-          src="/ai-bubble-notebook.html"
-          title="AI Bubble Research Notebook"
-          style={{
-            width: '100%',
-            height: 750,
-            border: '1px solid #D4C9B0',
-            borderRadius: 2,
-            background: '#fff',
-          }}
-        />
       </div>
 
       {/* References */}
@@ -384,7 +363,6 @@ function StockAnalysisApp() {
         >
           ↗ Launch Live App
         </a>
-        <DlBtn href="/files/App.py">↓ Download App.py</DlBtn>
       </div>
 
       <div style={{ borderTop: '1px solid #D4C9B0', margin: '28px 0' }} />
@@ -422,37 +400,10 @@ function StockAnalysisApp() {
           allow="clipboard-write"
         />
       </div>
-
-      {/* Source code */}
-      <div style={{ borderTop: '1px solid #D4C9B0', paddingTop: 28 }}>
-        <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: '#0C2340', fontWeight: 700, marginBottom: 6 }}>
-          Source Code — App.py
-        </div>
-        <div style={{ fontSize: 12, color: '#5C5C5C', marginBottom: 12 }}>
-          Scroll to explore the full script.
-        </div>
-        <pre style={{
-          height: 600,
-          overflowY: 'auto',
-          background: '#1E1E2E',
-          color: '#CDD6F4',
-          fontFamily: '"Courier New", Courier, monospace',
-          fontSize: 12,
-          lineHeight: 1.6,
-          padding: '20px 24px',
-          borderRadius: 3,
-          margin: 0,
-          whiteSpace: 'pre',
-          border: '1px solid #D4C9B0',
-        }}>
-          {code}
-        </pre>
-      </div>
     </div>
   )
 }
 
-/* ── Main component ──────────────────────────────── */
 export default function Projects() {
   const [proj, setProj] = useState('Real Estate Finance')
 

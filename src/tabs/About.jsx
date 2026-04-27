@@ -241,17 +241,9 @@ export default function About() {
           national real estate licensing exam toward my Texas sales agent license.
         </p>
         <p style={{ fontSize: 15, lineHeight: 1.9, color: '#1A1A1A', margin: '16px 0 0', maxWidth: 780 }}>
-          My interests sit at the intersection of real estate and financial analysis. I built an
-          automated residential valuation model and a Python-based stock screening tool, gaining
-          hands-on experience in financial modeling, data analysis, and applied research.
+          I am interested in real estate and want to deepen my understanding of how deals are evaluated, structured, and executed. I aim to begin my career as an investment, development, or market analyst at a real estate firm, where I can gain practical experience and work toward earning my brokerage license.
         </p>
-        <p style={{ fontSize: 15, lineHeight: 1.9, color: '#1A1A1A', margin: '16px 0 0', maxWidth: 780 }}>
-          I also spent five years as an NCAA student-athlete and was twice elected team captain —
-          an experience that shaped the discipline I bring to everything I do. I am looking to
-          start my career as an investment, development, or market analyst at a real estate firm,
-          where I can contribute meaningful analysis and grow within a strong team.
-        </p>
-      </div>
+      </div>  
 
       {/* Resume — below about text */}
       <Resume />

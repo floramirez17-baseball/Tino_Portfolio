@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
 const TICKERS = [
-  'NVDA','AMD','TSM','PLTR','SPY','QQQ',
-  'O','WPC','PLD','EQIX','VNQ','WY','WELL','VTR','EXR','ESS','CBRE','JLL',
+  'NVDA','MSFT','PLTR','LITE','JLL',
+  'VNQ','JNJ','LLY','WY','CBRE',
 ];
 
 const API_KEY = import.meta.env.VITE_FINNHUB_KEY;
@@ -13,26 +13,33 @@ function useQuotes() {
   );
 
   useEffect(() => {
+    let cancelled = false;
+
+    const fetchOne = async (symbol) => {
+      const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`);
+      if (!res.ok) throw new Error(`status ${res.status}`);
+      const d = await res.json();
+      if (!d.c) throw new Error('no price');
+      return { symbol, price: d.c, change: d.d, changePercent: d.dp };
+    };
+
     const fetchAll = async () => {
-      const results = await Promise.allSettled(
-        TICKERS.map(s =>
-          fetch(`https://finnhub.io/api/v1/quote?symbol=${s}&token=${API_KEY}`)
-            .then(r => r.json())
-            .then(d => ({ symbol: s, price: d.c, change: d.d, changePercent: d.dp }))
-        )
-      );
-      setQuotes(
-        results.map((r, i) =>
-          r.status === 'fulfilled' && r.value.price
-            ? r.value
-            : { symbol: TICKERS[i], price: null, change: null, changePercent: null }
-        )
-      );
+      for (const s of TICKERS) {
+        if (cancelled) return;
+        try {
+          const q = await fetchOne(s);
+          if (cancelled) return;
+          setQuotes(prev => prev.map(p => p.symbol === s ? q : p));
+        } catch {
+          // keep previous value on failure (rate-limit, stale, etc.)
+        }
+        await new Promise(r => setTimeout(r, 120));
+      }
     };
 
     fetchAll();
     const id = setInterval(fetchAll, 300_000);
-    return () => clearInterval(id);
+    return () => { cancelled = true; clearInterval(id); };
   }, []);
 
   return quotes;

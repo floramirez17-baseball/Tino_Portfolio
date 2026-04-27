@@ -1,0 +1,13 @@
+name: Keep Streamlit app warm
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Streamlit app
+        run: curl -fsSL --max-time 60 https://stapp-fmr.streamlit.app/ -o /dev/null
