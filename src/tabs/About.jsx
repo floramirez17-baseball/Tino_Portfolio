@@ -242,7 +242,7 @@ export default function About() {
       <div
         style={{
           textAlign: 'center',
-          fontSize: 48,
+          fontSize: 36,
           fontWeight: 900,
           color: navy,
           letterSpacing: 2,
@@ -250,7 +250,7 @@ export default function About() {
           marginTop: 8,
         }}
       >
-        About
+        About Me
       </div>
       {/* About text — above resume */}
       <div style={{ marginBottom: '2rem' }}>
