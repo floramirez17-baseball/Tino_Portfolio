@@ -1,15 +1,52 @@
-import { useState, useEffect } from 'react'
+import { Suspense, lazy, useState, useEffect } from 'react'
+import NeonSnake from '../components/NeonSnake'
 
-const PROJECT_TABS = [
-  'Real Estate Finance',
-  "Should AVM's Replace Human Appraisers?",
-  'AI Bubble Research',
-  'Stock Analysis App',
-  'Downloads',
-]
+const ProjectsHub3D = lazy(() => import('../components/ProjectsHub3D'))
+const AcademicHub3D = lazy(() => import('../components/AcademicHub3D'))
 
 const RE_SLIDES = 23
 const AI_SLIDES = 19
+
+const ACADEMIC_PROJECTS = [
+  {
+    key: 'Real Estate Finance',
+    title: 'Marinoni Manor Development',
+    meta: 'Northwest Arkansas Multifamily Conversion',
+    marker: 'CRE',
+  },
+  {
+    key: "Should AVM's Replace Human Appraisers?",
+    title: "Should AVM's Replace Human Appraisers?",
+    meta: 'PropTech, AVMs, and valuation bias',
+    marker: 'AI in CRE',
+  },
+  {
+    key: 'AI Bubble Research',
+    title: 'AI Bubble Research',
+    meta: 'AI equities and market speculation',
+    marker: 'Market Research',
+  },
+  {
+    key: 'Stock Analysis App',
+    title: 'Stock Analysis App',
+    meta: 'Interactive portfolio dashboard',
+    marker: 'Python Analysis',
+  },
+]
+
+function handleScenePointerMove(event) {
+  const rect = event.currentTarget.getBoundingClientRect()
+  const x = ((event.clientX - rect.left) / rect.width - 0.5).toFixed(3)
+  const y = ((event.clientY - rect.top) / rect.height - 0.5).toFixed(3)
+
+  event.currentTarget.style.setProperty('--scene-x', x)
+  event.currentTarget.style.setProperty('--scene-y', y)
+}
+
+function handleScenePointerLeave(event) {
+  event.currentTarget.style.setProperty('--scene-x', 0)
+  event.currentTarget.style.setProperty('--scene-y', 0)
+}
 
 /* ── shared style objects ───────────────────────── */
 const mastheadTop = {
@@ -404,26 +441,158 @@ function StockAnalysisApp() {
   )
 }
 
-export default function Projects() {
-  const [proj, setProj] = useState('Real Estate Finance')
+function SceneButton({ type, title, kicker, detail, onClick }) {
+  return (
+    <button className={`projects-scene-object projects-scene-object-${type}`} onClick={onClick}>
+      <span className="skyscraper-roof" aria-hidden="true" />
+      <span className="skyscraper-windows" aria-hidden="true" />
+      <span className="skyscraper-upper-floor" aria-hidden="true" />
+      <span className="skyscraper-label">
+        <span className="projects-scene-kicker">{kicker}</span>
+        <span className="projects-scene-title">{title}</span>
+        <span className="projects-scene-detail">{detail}</span>
+        <span className="projects-scene-action">Enter Upper Floor</span>
+      </span>
+    </button>
+  )
+}
+
+function ProjectsHub({ onAcademic, onPersonal }) {
+  const [entering, setEntering] = useState(null)
+  const [labelHover, setLabelHover] = useState(null)
+
+  const enterBuilding = (target, callback) => {
+    if (entering) return
+    setEntering(target)
+    window.setTimeout(callback, 480)
+  }
 
   return (
-    <div>
-      {/* Project sub-tabs */}
-      <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid #D4C9B0', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
-        {PROJECT_TABS.map(t => (
-          <button
-            key={t}
-            onClick={() => setProj(t)}
-            className={`proj-tab${proj === t ? ' active' : ''}`}
-          >
-            {t}
-          </button>
-        ))}
+    <div
+      className={`projects-scene projects-hub-scene${entering ? ` entering-${entering}` : ''}`}
+      onPointerMove={handleScenePointerMove}
+      onPointerLeave={handleScenePointerLeave}
+    >
+      <div className="projects-ambient projects-ambient-a" aria-hidden="true" />
+      <div className="projects-ambient projects-ambient-b" aria-hidden="true" />
+      <div className="projects-cloud projects-cloud-a" aria-hidden="true" />
+      <div className="projects-cloud projects-cloud-b" aria-hidden="true" />
+      <Suspense fallback={<div className="projects-hub-3d-loading" aria-hidden="true" />}>
+        <ProjectsHub3D
+          entering={entering}
+          hovering={labelHover}
+          onEnter={(target) => enterBuilding(target, target === 'academic' ? onAcademic : onPersonal)}
+        />
+      </Suspense>
+      <div className="projects-scene-header">
+        <span>Projects Hub</span>
+        <h1>Choose a collection</h1>
       </div>
+      <div className="projects-scene-stage">
+        <button
+          className="hub-3d-label hub-3d-label-academic"
+          onClick={() => enterBuilding('academic', onAcademic)}
+          onMouseEnter={() => setLabelHover('academic')}
+          onMouseLeave={() => setLabelHover(null)}
+        >
+          <span className="projects-scene-kicker">Walton College</span>
+          <span className="projects-scene-title">Academic Projects</span>
+          <span className="projects-scene-detail">Research, presentations, analytics, and finance coursework</span>
+          <span className="projects-scene-action">Enter Upper Floor</span>
+        </button>
+        <button
+          className="hub-3d-label hub-3d-label-personal"
+          onClick={() => enterBuilding('personal', onPersonal)}
+          onMouseEnter={() => setLabelHover('personal')}
+          onMouseLeave={() => setLabelHover(null)}
+        >
+          <span className="projects-scene-kicker">Personal Build</span>
+          <span className="projects-scene-title">Personal Projects</span>
+          <span className="projects-scene-detail">A neon snake game built with vanilla JavaScript</span>
+          <span className="projects-scene-action">Enter Upper Floor</span>
+        </button>
+      </div>
+    </div>
+  )
+}
 
-      {/* Real Estate Finance */}
-      {proj === 'Real Estate Finance' && (
+function SceneBackButton({ onClick, children = 'Return to Projects Hub' }) {
+  return (
+    <button className="projects-scene-back" onClick={onClick}>
+      {children}
+    </button>
+  )
+}
+
+function AcademicScene({ onSelect, onHub }) {
+  const [cardHover, setCardHover] = useState(null)
+
+  return (
+    <div className="projects-scene projects-academic-hallway">
+      <Suspense fallback={<div style={{ position: 'absolute', inset: 0, background: '#f0eee9' }} />}>
+        <AcademicHub3D onSelect={onSelect} hoveredKey={cardHover} />
+      </Suspense>
+      <div className="projects-hallway-ui">
+        <SceneBackButton onClick={onHub} />
+        <div className="projects-scene-header projects-hallway-header">
+          <span>Academic Collection</span>
+          <h1>Select a project</h1>
+        </div>
+        <div className="academic-object-grid">
+          {ACADEMIC_PROJECTS.map((project) => (
+            <button
+              key={project.key}
+              className="academic-object"
+              onClick={() => onSelect(project.key)}
+              onMouseEnter={() => setCardHover(project.key)}
+              onMouseLeave={() => setCardHover(null)}
+            >
+              <span className="academic-object-marker">{project.marker}</span>
+              <span className="academic-object-title">{project.title}</span>
+              <span className="academic-object-meta">{project.meta}</span>
+              <span className="academic-object-action">View Project</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ProjectFrame({ onBack, children }) {
+  return (
+    <div>
+      <div className="projects-frame-toolbar">
+        <button className="projects-frame-btn" onClick={onBack}>← Back to Academic Scene</button>
+      </div>
+      {children}
+    </div>
+  )
+}
+
+function PersonalFrame({ onHub, children }) {
+  return (
+    <div>
+      <div className="projects-frame-toolbar">
+        <button className="projects-frame-btn" onClick={onHub}>← Return to Projects Hub</button>
+      </div>
+      {children}
+    </div>
+  )
+}
+
+export default function Projects() {
+  const [scene, setScene] = useState('hub')
+  const [proj, setProj] = useState('Real Estate Finance')
+
+  const openAcademicProject = (projectKey) => {
+    setProj(projectKey)
+    setScene('project')
+  }
+
+  const renderProject = () => {
+    if (proj === 'Real Estate Finance') {
+      return (
         <div style={{ fontFamily: '"Times New Roman", Times, serif', maxWidth: 820, margin: '0 auto' }}>
           <div style={mastheadTop}>
             <span style={mastheadLabel}>Walton College of Business</span>
@@ -464,22 +633,30 @@ export default function Projects() {
 
           <Slideshow basePath="/slides" totalSlides={RE_SLIDES} />
         </div>
-      )}
+      )
+    }
 
-      {proj === "Should AVM's Replace Human Appraisers?" && <AVMPaper />}
+    if (proj === "Should AVM's Replace Human Appraisers?") return <AVMPaper />
+    if (proj === 'AI Bubble Research') return <AIBubbleProject />
+    if (proj === 'Stock Analysis App') return <StockAnalysisApp />
+    return null
+  }
 
-      {proj === 'AI Bubble Research' && <AIBubbleProject />}
+  if (scene === 'hub') {
+    return <ProjectsHub onAcademic={() => setScene('academic')} onPersonal={() => setScene('personal')} />
+  }
 
-      {proj === 'Stock Analysis App' && <StockAnalysisApp />}
+  if (scene === 'academic') {
+    return <AcademicScene onSelect={openAcademicProject} onHub={() => setScene('hub')} />
+  }
 
-      {proj === 'Downloads' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <DlBtn href="/files/Real Estate Finance Final Project.pptx">↓ FINN Real Estate — Group Project (.pptx)</DlBtn>
-          <DlBtn href="/files/Should AVMs Replace Human Appraisers%3F.docx">↓ Should AVM's Replace Human Appraisers? (.docx)</DlBtn>
-          <DlBtn href="/files/Is There an AI Bubble%3F.pptx">↓ Is There an AI Bubble? — Research Presentation (.pptx)</DlBtn>
-          <DlBtn href="/files/App.py">↓ Stock Analysis App — App.py</DlBtn>
-        </div>
-      )}
-    </div>
-  )
+  if (scene === 'personal') {
+    return <PersonalFrame onHub={() => setScene('hub')}><NeonSnake /></PersonalFrame>
+  }
+
+  if (scene === 'project') {
+    return <ProjectFrame onBack={() => setScene('academic')}>{renderProject()}</ProjectFrame>
+  }
+
+  return null
 }
